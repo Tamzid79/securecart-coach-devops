@@ -1,0 +1,39 @@
+{
+  "name": "securecart-coach-devops",
+  "version": "1.0.0",
+  "description": "SecureCart Coach API for Jenkins DevOps pipeline assignment",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest --coverage --runInBand",
+    "lint": "eslint .",
+    "build": "npm ci && npm test",
+    "release": "node -e \"console.log('Release version:', require('./package.json').version)\""
+  },
+  "keywords": [
+    "jenkins",
+    "devops",
+    "securecart",
+    "nodejs",
+    "docker"
+  ],
+  "author": "MD TAMZID HOSSAIN",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.3",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "prom-client": "^15.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.0",
+    "supertest": "^6.3.4"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}

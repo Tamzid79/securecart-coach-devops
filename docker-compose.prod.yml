@@ -1,0 +1,15 @@
+﻿services:
+  securecart-production:
+    image: securecart-coach:${APP_VERSION:-latest}
+    container_name: securecart-production
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+    ports:
+      - "3002:3000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 3

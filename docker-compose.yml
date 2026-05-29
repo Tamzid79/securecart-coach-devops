@@ -1,0 +1,30 @@
+﻿services:
+  securecart-staging:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: securecart-coach:${APP_VERSION:-latest}
+    container_name: securecart-staging
+    environment:
+      NODE_ENV: staging
+      PORT: 3000
+    ports:
+      - "3001:3000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+
+  prometheus:
+    image: prom/prometheus:v2.52.0
+    container_name: securecart-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/alert-rules.yml:/etc/prometheus/alert-rules.yml
+    depends_on:
+      - securecart-staging
+    restart: unless-stopped

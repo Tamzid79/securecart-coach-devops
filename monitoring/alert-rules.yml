@@ -1,0 +1,20 @@
+﻿groups:
+  - name: securecart-alerts
+    rules:
+      - alert: SecureCartAPIDown
+        expr: up{job="securecart-coach"} == 0
+        for: 15s
+        labels:
+          severity: critical
+        annotations:
+          summary: "SecureCart Coach API is down"
+          description: "Prometheus cannot scrape the SecureCart Coach API metrics endpoint."
+
+      - alert: SecureCartHighRequestVolume
+        expr: increase(securecart_http_requests_total[1m]) > 20
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "High API request volume detected"
+          description: "SecureCart Coach has received more than 20 requests in one minute."
